@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>耀鸥服装 - 我的购物车</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="header-container"></div>
+    <div id="notice-container"></div>
+
+    <div style="max-width:1100px; margin:25px auto; padding:0 20px;">
+        <h2 class="section-title">🛒 我的购物车</h2>
+        <div id="cart-content"></div>
+    </div>
+
+    <div id="footer-container"></div>
+
+    <script src="app.js"></script>
+    <script>
+        document.getElementById('header-container').innerHTML = renderHeader('cart');
+        document.getElementById('notice-container').innerHTML = renderNoticeBar();
+        document.getElementById('footer-container').innerHTML = renderFooter();
+        initPage('cart');
+
+        const shop = Storage.getShopInfo();
+
+        function renderCart() {
+            const cart = Storage.getCart();
+            const container = document.getElementById('cart-content');
+
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div style="text-align:center; padding:70px 20px; background:white; border-radius:12px; border:1px solid #e0e0e0;">
+                        <div style="font-size:80px; color:#a5d6a7; margin-bottom:20px;">🛒</div>
+                        <div style="font-size:18px; color:#666; margin-bottom:25px;">购物车空空如也，快去挑选心仪的衣服吧~</div>
+                        <button onclick="window.location.href='index.html'" style="padding:12px 40px; background:#1a7a4c; color:white; border:none; border-radius:25px; font-size:15px; cursor:pointer; font-weight:bold;">🏠 去逛逛</button>
+                    </div>
+                `;
+                return;
+            }
+
+            // 商品列表
+            let itemsHtml = `
+                <div style="background:white; border-radius:12px; padding:25px; border:1px solid #e0e0e0;">
+                    <div style="display:grid; grid-template-columns:2.5fr 0.8fr 1fr 1fr 0.5fr; padding:12px 20px; background:#1a7a4c; border-radius:8px; font-weight:bold; color:white; font-size:14px; margin-bottom:15px;">
+                        <span>商品信息</span>
+                        <span>单价</span>
+                        <span>数量</span>
+                        <span>小计</span>
+                        <span>操作</span>
+                    </div>
+            `;
+
+            cart.forEach((item, idx) => {
+                itemsHtml += `
+                    <div style="display:grid; grid-template-columns:2.5fr 0.8fr 1fr 1fr 0.5fr; padding:18px 20px; border-bottom:1px solid #eee; align-items:center; gap:10px;">
+                        <div style="display:flex; gap:15px; align-items:center;">
+                            <div style="width:80px; height:80px; background:#f5f5f5; border-radius:8px; overflow:hidden; display:flex; align-items:center; justify-content:center; border:1px solid #e0e0e0;">
+                                ${item.image
+                                    ? `<img src="${item.image}" alt="${item.name}" style="width:100%; height:100%; object-fit:cover;">`
+                                    : `<div style="font-size:40px; color:#ccc;">${item.category === 'men' ? '👔' : '👗'}</div>`}
+                            </div>
+                            <div>
+                                <div style="font-size:14px; color:#333; margin-bottom:5px; font-weight:600;">${item.name}</div>
+                                <div style="font-size:12px; color:#4caf50; font-weight:bold;">款号: ${item.code}</div>
+                                <div style="font-size:13px; color:#888; margin-top:5px;">颜色: ${item.color} | 尺码: ${item.size}</div>
+                            </div>
+                        </div>
+                        <div style="color:#1a7a4c; font-weight:bold; font-size:16px;">¥${parseFloat(item.price).toFixed(2)}</div>
+                        <div style="display:flex; align-items:center; gap:8px; justify-content:center;">
+                            <button onclick="changeQty(${idx}, -1)" style="width:28px; height:28px; border:1px solid #ddd; background:white; border-radius:6px; cursor:pointer; font-weight:bold; font-size:14px; color:#333;">−</button>
+                            <span style="min-width:30px; text-align:center; font-size:15px; font-weight:bold; color:#333;">${item.quantity}</span>
+                            <button onclick="changeQty(${idx}, 1)" style="width:28px; height:28px; border:1px solid #ddd; background:white; border-radius:6px; cursor:pointer; font-weight:bold; font-size:14px; color:#333;">+</button>
+                        </div>
+                        <div style="font-weight:bold; color:#1a7a4c; font-size:18px;">¥${parseFloat(item.price * item.quantity).toFixed(2)}</div>
+                        <button onclick="removeItem(${idx})" style="background:none; border:none; color:#999; cursor:pointer; font-size:22px; transition:all 0.3s;" onmouseover="this.style.color='#ff6b6b'" onmouseout="this.style.color='#999'">✕</button>
+                    </div>
+                `;
+            });
+
+            itemsHtml += `</div>`;
+
+            // 汇总和操作
+            const summaryHtml = `
+                <div style="background:white; border-radius:12px; padding:25px; border:1px solid #e0e0e0; margin-top:20px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:20px;">
+                        <div style="font-size:14px; color:#666;">
+                            <div>商品种类: <span style="color:#1a7a4c; font-weight:bold;">${cart.length} 款</span></div>
+                            <div style="margin-top:5px;">总件数: <span style="color:#1a7a4c; font-weight:bold;">${Cart.getTotalItems()} 件</span></div>
+                        </div>
+                        <div style="text-align:right;">
+                            <div style="font-size:14px; color:#666;">总计金额</div>
+                            <div style="font-size:32px; color:#1a7a4c; font-weight:bold;">¥${parseFloat(Cart.getTotal()).toFixed(2)}</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // 购买说明
+            const tipsHtml = `
+                <div style="background:#f1f8f4; border-left:4px solid #4caf50; padding:20px 25px; border-radius:10px; margin-top:20px;">
+                    <h4 style="color:#1a7a4c; margin-bottom:12px; font-size:16px; letter-spacing:1px;">💡 购买说明 & 付款方式</h4>
+                    <p style="color:#555; font-size:14px; margin-bottom:5px; line-height:1.8;">① 本店为工厂直销，所有商品均为工厂价，质量保证，有任何质量问题<b style="color:#1a7a4c;">包退包换</b>！</p>
+                    <p style="color:#555; font-size:14px; margin-bottom:5px; line-height:1.8;">② <b style="color:#1a7a4c;">线上邮寄需自费运费</b>（运费按实际重量和距离计算），也可到店自提。</p>
+                    <p style="color:#555; font-size:14px; margin-bottom:5px; line-height:1.8;">③ 请<b style="color:#1a7a4c;">添加微信</b>进行付款，并将购物车截图发送给我们，确认款式和尺码。</p>
+                    <p style="color:#555; font-size:14px; margin-bottom:5px; line-height:1.8;">④ 欢迎到店试穿选购：<b style="color:#1a7a4c;">${shop.address}</b></p>
+                    <p style="color:#555; font-size:14px; line-height:1.8;">⑤ 营业时间：<b style="color:#1a7a4c;">9:00 - 22:00</b></p>
+                </div>
+            `;
+
+            // 微信信息
+            const wechatHtml = `
+                <div style="background:white; padding:30px; border-radius:12px; margin-top:20px; text-align:center; border:2px dashed #4caf50;">
+                    <h4 style="color:#1a7a4c; margin-bottom:15px; font-size:17px; letter-spacing:2px;">📱 微信付款方式</h4>
+                    <p style="color:#888; font-size:14px; margin-bottom:15px;">请添加微信并发送购物车截图</p>
+                    <div style="font-size:28px; color:#1a7a4c; font-weight:bold; margin:15px 0; padding:12px; background:#f1f8f4; border-radius:10px; letter-spacing:2px;">微信号: ${shop.wechat}</div>
+                    <button onclick="copyWechat()" style="padding:12px 35px; background:#4caf50; color:white; border:none; border-radius:25px; font-size:14px; cursor:pointer; font-weight:bold;">📋 复制微信号</button>
+                    <div style="margin-top:20px; padding-top:20px; border-top:1px dashed #c8e6c9;">
+                        <p style="color:#888; font-size:13px;">或拨打：<b style="color:#1a7a4c;">${shop.phone}</b></p>
+                        <p style="color:#888; font-size:13px; margin-top:5px;">邮箱：${shop.email}</p>
+                    </div>
+                </div>
+            `;
+
+            // 底部按钮
+            const actionsHtml = `
+                <div style="text-align:center; margin-top:25px; display:flex; gap:15px; justify-content:center; flex-wrap:wrap;">
+                    <button onclick="clearCart()" style="padding:12px 30px; background:white; color:#666; border:1px solid #ddd; border-radius:22px; font-size:14px; cursor:pointer; font-weight:bold;">🗑️ 清空购物车</button>
+                    <button onclick="window.location.href='index.html'" style="padding:12px 30px; background:#4caf50; color:white; border:none; border-radius:22px; font-size:14px; cursor:pointer; font-weight:bold;">🛒 继续选购</button>
+                </div>
+            `;
+
+            container.innerHTML = itemsHtml + summaryHtml + tipsHtml + wechatHtml + actionsHtml;
+        }
+
+        function changeQty(idx, delta) {
+            const cart = Storage.getCart();
+            const newQty = cart[idx].quantity + delta;
+            if (newQty < 1) {
+                if (confirm('确定要移除这件商品吗？')) {
+                    removeItem(idx);
+                }
+                return;
+            }
+            cart[idx].quantity = newQty;
+            Storage.saveCart(cart);
+            Cart.updateCartCount();
+            renderCart();
+        }
+
+        function removeItem(idx) {
+            const cart = Storage.getCart();
+            cart.splice(idx, 1);
+            Storage.saveCart(cart);
+            Cart.updateCartCount();
+            renderCart();
+            showToast('已移除商品');
+        }
+
+        function clearCart() {
+            if (confirm('确定要清空购物车吗？')) {
+                Cart.clear();
+                renderCart();
+                showToast('购物车已清空');
+            }
+        }
+
+        function copyWechat() {
+            const textarea = document.createElement('textarea');
+            textarea.value = shop.wechat;
+            document.body.appendChild(textarea);
+            textarea.select();
+            try {
+                document.execCommand('copy');
+                showToast('✓ 微信号已复制：' + shop.wechat);
+            } catch(e) {
+                showToast('复制失败，请手动复制');
+            }
+            document.body.removeChild(textarea);
+        }
+
+        renderCart();
+    </script>
+</body>
+</html>

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>耀鸥服装工厂店 - 源头工厂 品质保证</title>
+    <meta name="description" content="耀鸥服装工厂店 - 源头工厂直销，品质保证，有任何质量问题包退包换。男装、女装、上衣、裤子、套装、裙子。">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="header-container"></div>
+    <div id="notice-container"></div>
+
+    <!-- Banner -->
+    <section class="banner">
+        <div class="banner-inner">
+            <div class="banner-visit">
+                👥 今日浏览量：<span class="num" id="live-views">0</span>
+            </div>
+            <span class="banner-deco deco-1">🌿</span>
+            <span class="banner-deco deco-2">👔</span>
+            <span class="banner-deco deco-3">✨</span>
+            <span class="banner-deco deco-4">👗</span>
+            <h2>耀鸥服装 工厂店</h2>
+            <p style="font-size:18px; margin-top:15px;">源头工厂 · 工厂价直销 · 品质保证</p>
+            <p style="margin-top:8px; opacity:0.95; font-size:14px;">有任何质量问题包退包换 · 每天上新</p>
+            <div class="banner-tagline">🏭 源头工厂 · 品质优选 · 每日上新</div>
+
+            <div class="banner-features">
+                <div class="feature-item">🏭 源头工厂</div>
+                <div class="feature-item">💰 工厂直销价</div>
+                <div class="feature-item">✅ 品质保证</div>
+                <div class="feature-item">🔄 包退包换</div>
+                <div class="feature-item">🆕 每天上新</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 视频展示区域 -->
+    <section class="video-section">
+        <div class="video-wrapper">
+            <h2 class="section-title"><span class="section-title-wrap">🎬 店铺 & 服装展示</span></h2>
+            <p style="text-align:center; color:#666; font-size:14px; margin-bottom:25px;">欢迎观看我们的工厂实拍视频，品质看得见</p>
+
+            <!-- 视频容器：尺寸固定为 16:9 比例，格式锁定为 MP4 -->
+            <div class="video-container">
+                <video
+                    controls
+                    preload="metadata"
+                    playsinline
+                    style="width:100%; height:100%; display:block; object-fit:cover; background:#000;">
+                    <!-- 仅支持 MP4 格式（H.264 编码） -->
+                    <source src="./video/mangguo.mp4" type="video/mp4; codecs=&quot;avc1.42E01E, mp4a.40.2&quot;">
+                    <p style="color:#fff; padding:30px; text-align:center; font-size:15px;">
+                        ⚠️ 无法播放视频。<br>
+                        请确保视频文件存在于：<code style="background:rgba(255,255,255,0.15); padding:3px 8px; border-radius:4px;">./video/shop.mp4</code><br>
+                        格式要求：<b style="color:#4caf50;">MP4 (H.264 编码)</b>
+                    </p>
+                </video>
+            </div>
+
+
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px,1fr)); gap:15px; margin-top:30px;">
+                <div style="background:#f1f8f4; padding:22px; border-radius:12px; text-align:center; border-left:4px solid #4caf50;">
+                    <div style="font-size:32px; margin-bottom:8px;">🏭</div>
+                    <div style="color:#1a7a4c; font-weight:bold; font-size:15px;">自有工厂</div>
+                    <div style="color:#666; font-size:13px; margin-top:5px;">专业生产 品质可控</div>
+                </div>
+                <div style="background:#f1f8f4; padding:22px; border-radius:12px; text-align:center; border-left:4px solid #4caf50;">
+                    <div style="font-size:32px; margin-bottom:8px;">💰</div>
+                    <div style="color:#1a7a4c; font-weight:bold; font-size:15px;">实惠价格</div>
+                    <div style="color:#666; font-size:13px; margin-top:5px;">源头直销 省去中间</div>
+                </div>
+                <div style="background:#f1f8f4; padding:22px; border-radius:12px; text-align:center; border-left:4px solid #4caf50;">
+                    <div style="font-size:32px; margin-bottom:8px;">✨</div>
+                    <div style="color:#1a7a4c; font-weight:bold; font-size:15px;">款式丰富</div>
+                    <div style="color:#666; font-size:13px; margin-top:5px;">男装女装 应有尽有</div>
+                </div>
+                <div style="background:#f1f8f4; padding:22px; border-radius:12px; text-align:center; border-left:4px solid #4caf50;">
+                    <div style="font-size:32px; margin-bottom:8px;">🎁</div>
+                    <div style="color:#1a7a4c; font-weight:bold; font-size:15px;">贴心服务</div>
+                    <div style="color:#666; font-size:13px; margin-top:5px;">质量问题 包退包换</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 分类入口 -->
+    <section class="category-section">
+        <h2 class="section-title"><span class="section-title-wrap">🌟 精选分类</span></h2>
+        <div class="category-grid">
+            <div class="category-card men" onclick="window.location.href='men.html'">
+                <span class="category-icon">👔</span>
+                <h3>精品男装</h3>
+                <p>商务休闲 · 简约时尚</p>
+                <p>上衣 · 裤子 · 套装</p>
+                <div class="category-arrow">立即选购 →</div>
+            </div>
+            <div class="category-card women" onclick="window.location.href='women.html'">
+                <span class="category-icon">👗</span>
+                <h3>精品女装</h3>
+                <p>甜美优雅 · 时尚潮流</p>
+                <p>上衣 · 裤子 · 套装 · 裙子</p>
+                <div class="category-arrow">立即选购 →</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 热销推荐 -->
+    <section class="product-section">
+        <h2 class="section-title"><span class="section-title-wrap">🔥 热销推荐</span>
+            <span style="font-size:13px; color:#999; font-weight:normal; margin-left:12px; letter-spacing:1px;">HOT · 热卖款</span>
+        </h2>
+        <div class="product-grid" id="hot-products"></div>
+    </section>
+
+    <!-- 新品上架 -->
+    <section class="product-section">
+        <h2 class="section-title"><span class="section-title-wrap">✨ 新品上架</span>
+            <span style="font-size:13px; color:#999; font-weight:normal; margin-left:12px; letter-spacing:1px;">NEW · 最新款</span>
+        </h2>
+        <div class="product-grid" id="new-products"></div>
+    </section>
+
+    <!-- 店铺特色 -->
+    <section class="features-section">
+        <div style="background:#f1f8f4; padding:40px 25px; border-radius:15px; max-width:1200px; margin:40px auto; border:1px dashed #a5d6a7;">
+            <h2 class="section-title"><span class="section-title-wrap">💎 我们的承诺</span></h2>
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:20px; margin-top:25px;">
+                <div style="background:white; padding:25px; border-radius:12px; text-align:center; border:1px solid #c8e6c9; transition:all 0.3s;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 8px 20px rgba(76,175,80,0.15)'" onmouseout="this.style.transform=''; this.style.boxShadow='none'">
+                    <div style="font-size:48px; margin-bottom:12px;">🏭</div>
+                    <h3 style="color:#1a7a4c; margin-bottom:8px; font-size:17px;">源头工厂</h3>
+                    <p style="color:#666; font-size:14px;">自有生产车间，省去中间环节，价格更实惠</p>
+                </div>
+                <div style="background:white; padding:25px; border-radius:12px; text-align:center; border:1px solid #c8e6c9; transition:all 0.3s;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 8px 20px rgba(76,175,80,0.15)'" onmouseout="this.style.transform=''; this.style.boxShadow='none'">
+                    <div style="font-size:48px; margin-bottom:12px;">💰</div>
+                    <h3 style="color:#1a7a4c; margin-bottom:8px; font-size:17px;">工厂直销价</h3>
+                    <p style="color:#666; font-size:14px;">价格实惠，质量上乘，性价比高，买到就是赚到</p>
+                </div>
+                <div style="background:white; padding:25px; border-radius:12px; text-align:center; border:1px solid #c8e6c9; transition:all 0.3s;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 8px 20px rgba(76,175,80,0.15)'" onmouseout="this.style.transform=''; this.style.boxShadow='none'">
+                    <div style="font-size:48px; margin-bottom:12px;">✅</div>
+                    <h3 style="color:#1a7a4c; margin-bottom:8px; font-size:17px;">品质保证</h3>
+                    <p style="color:#666; font-size:14px;">严格质检，确保每件服装品质，让您买的放心</p>
+                </div>
+                <div style="background:white; padding:25px; border-radius:12px; text-align:center; border:1px solid #c8e6c9; transition:all 0.3s;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 8px 20px rgba(76,175,80,0.15)'" onmouseout="this.style.transform=''; this.style.boxShadow='none'">
+                    <div style="font-size:48px; margin-bottom:12px;">🔄</div>
+                    <h3 style="color:#1a7a4c; margin-bottom:8px; font-size:17px;">包退包换</h3>
+                    <p style="color:#666; font-size:14px;">有任何质量问题，我们承诺无期限包退包换</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="footer-container"></div>
+
+    <script src="app.js"></script>
+    <script>
+        document.getElementById('header-container').innerHTML = renderHeader('index');
+        document.getElementById('notice-container').innerHTML = renderNoticeBar();
+        document.getElementById('footer-container').innerHTML = renderFooter();
+        initPage('index');
+
+        // 更新浏览量
+        updateVisitCounter('live-views');
+
+        const allProducts = Storage.getProducts().filter(p => p.status === 'on');
+
+        // 热销推荐：按 isHot 筛选
+        const hot = allProducts.filter(p => p.isHot);
+        const hotToShow = hot.length > 0 ? hot : allProducts.slice(0, 4);
+
+        // 新品上架：按 isNew 筛选
+        const newItems = allProducts.filter(p => p.isNew);
+        const newToShow = newItems.length > 0 ? newItems : allProducts.slice(-6).reverse();
+
+        document.getElementById('hot-products').innerHTML = hotToShow.map(renderProductCard).join('');
+        document.getElementById('new-products').innerHTML = newToShow.map(renderProductCard).join('');
+
+        // 实时更新浏览量（模拟每10-20秒随机增加，同时响应 localStorage 变化）
+        setInterval(() => {
+            // 模拟有人浏览（仅做显示效果）
+            // 如果有其他标签页修改了浏览量，也会被读取到
+            const current = Storage.getVisitCount();
+            const el = document.getElementById('live-views');
+            if (el) {
+                const displayed = parseInt(el.textContent.replace(/[^\d]/g, '')) || 0;
+                if (current !== displayed) {
+                    updateVisitCounter('live-views');
+                }
+            }
+        }, 3000);
+    </script>
+</body>
+</html>

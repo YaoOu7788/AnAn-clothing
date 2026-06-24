@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>耀鸥服装 - 女装专区</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="header-container"></div>
+    <div id="notice-container"></div>
+
+    <section style="max-width:1200px; margin:25px auto; padding:0 20px;">
+        <h2 class="section-title">👗 女装专区</h2>
+
+        <!-- 子分类标签 -->
+        <div class="subcategory-tabs">
+            <button class="active" data-sub="all">全部商品</button>
+            <button data-sub="top">上衣</button>
+            <button data-sub="pants">裤子</button>
+            <button data-sub="suit">套装</button>
+            <button data-sub="dress">裙子</button>
+        </div>
+
+        <div class="product-grid" id="product-list"></div>
+        <div id="empty-tip" style="display:none; text-align:center; padding:60px; color:#666;">
+            <p style="font-size:64px; margin-bottom:20px;">👗</p>
+            <p style="font-size:18px; margin-bottom:15px;">暂无商品，敬请期待~</p>
+            <button onclick="window.location.href='index.html'" style="padding:12px 30px; background:#4caf50; color:white; border:none; border-radius:22px; font-size:15px; cursor:pointer;">返回首页</button>
+        </div>
+    </section>
+
+    <div id="footer-container"></div>
+
+    <script src="app.js"></script>
+    <script>
+        document.getElementById('header-container').innerHTML = renderHeader('women');
+        document.getElementById('notice-container').innerHTML = renderNoticeBar();
+        document.getElementById('footer-container').innerHTML = renderFooter();
+        initPage('women');
+
+        let currentSub = 'all';
+
+        function renderProducts() {
+            const products = Storage.getProducts()
+                .filter(p => p.category === 'women' && p.status === 'on')
+                .filter(p => currentSub === 'all' || p.subcategory === currentSub);
+
+            const grid = document.getElementById('product-list');
+            const empty = document.getElementById('empty-tip');
+
+            if (products.length === 0) {
+                grid.innerHTML = '';
+                empty.style.display = 'block';
+            } else {
+                empty.style.display = 'none';
+                grid.innerHTML = products.map(renderProductCard).join('');
+            }
+        }
+
+        document.querySelectorAll('.subcategory-tabs button').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.subcategory-tabs button').forEach(b => {
+                    b.classList.remove('active');
+                    b.style.background = 'white';
+                    b.style.color = '#555';
+                    b.style.border = '1px solid #ddd';
+                });
+                this.classList.add('active');
+                this.style.background = '#1a7a4c';
+                this.style.color = 'white';
+                this.style.border = '1px solid #1a7a4c';
+                currentSub = this.dataset.sub;
+                renderProducts();
+            });
+        });
+
+        // 初始化第一个按钮样式
+        const firstBtn = document.querySelector('.subcategory-tabs button.active');
+        if (firstBtn) {
+            firstBtn.style.background = '#1a7a4c';
+            firstBtn.style.color = 'white';
+            firstBtn.style.border = '1px solid #1a7a4c';
+        }
+
+        renderProducts();
+    </script>
+</body>
+</html>
