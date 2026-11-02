@@ -1,0 +1,25 @@
+[
+  {
+    "orderId": "YO20261102-180082",
+    "name": "俺",
+    "phone": "17373104452",
+    "wechat": "服装",
+    "delivery": "到店自提",
+    "address": "打发发发我发发",
+    "remark": "啊实打实",
+    "items": [
+      {
+        "name": "夏季简约圆领T恤",
+        "code": "NX-T001",
+        "size": "M",
+        "color": "白色",
+        "price": 89,
+        "quantity": 1
+      }
+    ],
+    "total": 89,
+    "itemCount": 1,
+    "status": "待处理",
+    "createdAt": "2026/11/2 18:43:00"
+  }
+]
